@@ -86,14 +86,26 @@
         </section>
 
         <section id="step-result" class="hidden bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 text-center">
-            <h2 class="text-2xl font-bold text-slate-900 mb-1">Test Yekunlaşdı!</h2>
-            <p class="text-slate-600 text-sm mb-6">Məlumatlarınız bazaya yazıldı.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto mb-8">
+            <div id="res-reaction-emoji" class="text-5xl mb-3">🎉</div>
+            <h2 id="res-reaction-title" class="text-2xl font-bold text-slate-900 mb-1">Test Yekunlaşdı!</h2>
+            <p class="text-slate-600 text-sm mb-6">Məlumatlarınız tədqiqat bazasına uğurla yazıldı.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto mb-6">
                 <div class="bg-slate-50 p-4 rounded-xl border"><span class="text-xs text-slate-500 block">Düşündüyünüz</span><span id="res-perceived" class="text-2xl font-extrabold text-indigo-600">B1</span></div>
                 <div class="bg-slate-50 p-4 rounded-xl border"><span class="text-xs text-slate-500 block">Real Səviyyə</span><span id="res-actual" class="text-2xl font-extrabold text-emerald-600">A2</span></div>
             </div>
-            <div id="res-analysis-box" class="p-4 rounded-xl mb-8 max-w-lg mx-auto text-sm"></div>
-            <button onclick="goHome()" class="bg-slate-900 text-white font-semibold py-3 px-8 rounded-xl">Yenidən Başla</button>
+
+            <!-- Reaksiya və Motivasiya Qutusu -->
+            <div id="res-analysis-box" class="p-4 rounded-xl mb-6 max-w-lg mx-auto text-sm"></div>
+
+            <!-- Əlaqə və Yenidən başlama düymələri -->
+            <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-lg mx-auto mb-4">
+                <a href="https://wa.me/994706606002?text=Salam,%20tədqiqat%20saytınızdan%20yazıram..." target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-sm">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    <span>Mənimlə Əlaqə Saxla</span>
+                </a>
+                <button onclick="goHome()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl transition-all">Yenidən Başla</button>
+            </div>
         </section>
 
         <section id="step-admin" class="hidden space-y-6">
