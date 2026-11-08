@@ -17,7 +17,7 @@ let currentQuestionIdx = 0;
 let selectedOptionIdx = null;
 let userAnswers = [];
 
-// Tədqiqatçı paneli üçün təyin edilmiş şifrə
+// Tədqiqatçı paneli üçün təyin edilmiş gizli şifrə
 const ADMIN_PASSWORD = "k1z2k3z4k5"; 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -54,6 +54,7 @@ function goHome() {
 function toggleAdminPanel() {
     const adminStep = document.getElementById('step-admin');
     if (adminStep.classList.contains('hidden')) {
+        // Düyməyə basıldıqda şifrə sorğusu açılır
         const password = prompt("Tədqiqatçı panelinə daxil olmaq üçün şifrəni daxil edin:");
         if (password === null) return;
         
