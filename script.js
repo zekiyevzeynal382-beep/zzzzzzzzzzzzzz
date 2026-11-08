@@ -36,7 +36,8 @@ let currentQuestionIdx = 0;
 let selectedOptionIdx = null;
 let userAnswers = [];
 
-const ADMIN_PASSWORD = "k1z2k3z4k5"; 
+// Yeni tədqiqatçı şifrəsi
+const ADMIN_PASSWORD = "19062012"; 
 
 window.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
