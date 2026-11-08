@@ -17,6 +17,9 @@ let currentQuestionIdx = 0;
 let selectedOptionIdx = null;
 let userAnswers = [];
 
+// Tədqiqatçı paneli üçün təyin edilmiş şifrə
+const ADMIN_PASSWORD = "k1z2k3z4k5"; 
+
 window.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     initSeedData();
@@ -37,6 +40,7 @@ function showStep(stepId) {
         document.getElementById(id).classList.add('hidden');
     });
     document.getElementById(stepId).classList.remove('hidden');
+    lucide.createIcons();
 }
 
 function goHome() {
@@ -50,8 +54,15 @@ function goHome() {
 function toggleAdminPanel() {
     const adminStep = document.getElementById('step-admin');
     if (adminStep.classList.contains('hidden')) {
-        renderAdminDashboard();
-        showStep('step-admin');
+        const password = prompt("Tədqiqatçı panelinə daxil olmaq üçün şifrəni daxil edin:");
+        if (password === null) return;
+        
+        if (password === ADMIN_PASSWORD) {
+            renderAdminDashboard();
+            showStep('step-admin');
+        } else {
+            alert("❌ Yanlış şifrə! Bu panelə yalnız tədqiqatçı daxil ola bilər.");
+        }
     } else {
         goHome();
     }
@@ -140,17 +151,39 @@ function finishQuiz() {
     document.getElementById('res-perceived').innerText = currentUser.perceivedLevel;
     document.getElementById('res-actual').innerText = `${actualLevel} (${score}/10 xal)`;
 
+    const emojiEl = document.getElementById('res-reaction-emoji');
+    const titleEl = document.getElementById('res-reaction-title');
     const box = document.getElementById('res-analysis-box');
-    if (status === 'ACCURATE') {
-        box.className = "p-4 rounded-xl mb-8 max-w-lg mx-auto text-sm bg-emerald-50 text-emerald-800 border border-emerald-200";
-        box.innerHTML = "<strong>Təbrik edirik!</strong> Öz bilik səviyyənizi tam dəqiq qiymətləndirmisiniz.";
-    } else if (status === 'OVERESTIMATED') {
-        box.className = "p-4 rounded-xl mb-8 max-w-lg mx-auto text-sm bg-amber-50 text-amber-800 border border-amber-200";
-        box.innerHTML = "<strong>Nəticə:</strong> Real bilik səviyyəniz təxmin etdiyinizdən bir qədər aşağı oldu.";
+
+    if (score >= 8) {
+        emojiEl.innerText = "🏆";
+        titleEl.innerText = "Möhtəşəm Nəticə!";
+        box.className = "p-5 rounded-xl mb-6 max-w-lg mx-auto text-sm bg-emerald-50 text-emerald-900 border border-emerald-200 text-left";
+        box.innerHTML = `
+            <div class="font-bold text-base mb-1 text-emerald-800">🌟 Əla iş çıxardın!</div>
+            <p class="mb-2">İngilis dili bilikləriniz və qrammatika bacarığınız çox yüksək səviyyədədir.</p>
+            <div class="text-xs italic text-emerald-700 bg-emerald-100/60 p-2.5 rounded-lg">💡 <strong>Motivasiya:</strong> "Uğur təsadüf deyil, davamlı əziyyətin nəticəsidir. Bu templə davam et!"</div>
+        `;
+    } else if (score >= 5) {
+        emojiEl.innerText = "🎯";
+        titleEl.innerText = "Yaxşı Nəticədir!";
+        box.className = "p-5 rounded-xl mb-6 max-w-lg mx-auto text-sm bg-amber-50 text-amber-900 border border-amber-200 text-left";
+        box.innerHTML = `
+            <div class="font-bold text-base mb-1 text-amber-800">💪 Pis deyil, potensialın var!</div>
+            <p class="mb-2">Baza biliklərin yerindədir, ancaq daha da irəliyə getmək üçün kiçik təkmilləşdirmələrə ehtiyacın var.</p>
+            <div class="text-xs italic text-amber-700 bg-amber-100/60 p-2.5 rounded-lg">💡 <strong>Motivasiya:</strong> "Hər səhv öyrənmək üçün bir addımdır. Zəif tərəflərini gücləndirərək daha da yaxşı ola bilərsən!"</div>
+        `;
     } else {
-        box.className = "p-4 rounded-xl mb-8 max-w-lg mx-auto text-sm bg-indigo-50 text-indigo-800 border border-indigo-200";
-        box.innerHTML = "<strong>Təbrik edirik!</strong> Özünüzə inamınız real biliyinizdən azdır. Daha yaxşı nəticə göstərdiniz!";
+        emojiEl.innerText = "🌱";
+        titleEl.innerText = "Hələ başlanğıcdasan!";
+        box.className = "p-5 rounded-xl mb-6 max-w-lg mx-auto text-sm bg-indigo-50 text-indigo-900 border border-indigo-200 text-left";
+        box.innerHTML = `
+            <div class="font-bold text-base mb-1 text-indigo-800">🚀 Öyrənmək heç vaxt gec deyil!</div>
+            <p class="mb-2">Bu test sadəcə başlanğıcdır. Müntəzəm məşq və oxumaqla səviyyəni sürətlə qaldıra bilərsən.</p>
+            <div class="text-xs italic text-indigo-700 bg-indigo-100/60 p-2.5 rounded-lg">💡 <strong>Motivasiya:</strong> "Böyük nailiyyətlər kiçik addımlarla başlayır. Çalışmaqdan əsla vaz keçmə!"</div>
+        `;
     }
+
     showStep('step-result');
 }
 
