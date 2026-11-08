@@ -1,14 +1,33 @@
 const questions = [
+    // --- A1 Səviyyəsi (3 sual) ---
     { id: 1, level: 'A1', question: "She _____ to school every day.", options: ["go", "goes", "going", "gone"], correct: 1 },
     { id: 2, level: 'A1', question: "_____ there any milk left in the fridge?", options: ["Is", "Are", "Do", "Have"], correct: 0 },
-    { id: 3, level: 'A2', question: "Yesterday, we _____ a really interesting movie.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
-    { id: 4, level: 'A2', question: "If it rains tomorrow, we _____ home.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
-    { id: 5, level: 'B1', question: "I haven't seen my cousin _____ 2018.", options: ["for", "since", "during", "from"], correct: 1 },
-    { id: 6, level: 'B1', question: "He asked me where I _____ the previous night.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
-    { id: 7, level: 'B2', question: "Despite _____ hard, he failed to achieve the target.", options: ["to work", "he worked", "working", "work"], correct: 2 },
-    { id: 8, level: 'B2', question: "Hardly _____ entered the room when the lights went out.", options: ["I had", "had I", "did I", "I have"], correct: 1 },
-    { id: 9, level: 'C1', question: "The proposal was rejected on the _____ that it was too expensive.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
-    { id: 10, level: 'C1', question: "She is meticulous _____ keeping her files organized.", options: ["with", "about", "in", "at"], correct: 1 }
+    { id: 3, level: 'A1', question: "They _____ football on Sundays.", options: ["plays", "play", "playing", "played"], correct: 1 },
+
+    // --- A2 Səviyyəsi (3 sual) ---
+    { id: 4, level: 'A2', question: "Yesterday, we _____ a really interesting movie.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
+    { id: 5, level: 'A2', question: "If it rains tomorrow, we _____ home.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
+    { id: 6, level: 'A2', question: "She is _____ than her brother.", options: ["tall", "taller", "tallest", "more tall"], correct: 1 },
+
+    // --- B1 Səviyyəsi (3 sual) ---
+    { id: 7, level: 'B1', question: "I haven't seen my cousin _____ 2018.", options: ["for", "since", "during", "from"], correct: 1 },
+    { id: 8, level: 'B1', question: "He asked me where I _____ the previous night.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
+    { id: 9, level: 'B1', question: "This book is _____ interesting than that one.", options: ["much", "more", "most", "very"], correct: 1 },
+
+    // --- B2 Səviyyəsi (3 sual) ---
+    { id: 10, level: 'B2', question: "Despite _____ hard, he failed to achieve the target.", options: ["to work", "he worked", "working", "work"], correct: 2 },
+    { id: 11, level: 'B2', question: "Hardly _____ entered the room when the lights went out.", options: ["I had", "had I", "did I", "I have"], correct: 1 },
+    { id: 12, level: 'B2', question: "I wish I _____ more time to finish the project yesterday.", options: ["have", "had", "had had", "would have"], correct: 2 },
+
+    // --- C1 Səviyyəsi (3 sual) ---
+    { id: 13, level: 'C1', question: "The proposal was rejected on the _____ that it was too expensive.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
+    { id: 14, level: 'C1', question: "She is meticulous _____ keeping her files organized.", options: ["with", "about", "in", "at"], correct: 1 },
+    { id: 15, level: 'C1', question: "Scarcely had we stepped outside _____ it started to pour.", options: ["when", "than", "then", "after"], correct: 0 },
+
+    // --- C2 Səviyyəsi (3 sual) ---
+    { id: 16, level: 'C2', question: "Not only _____ late, but he also forgot his passport.", options: ["he was", "was he", "did he be", "he is"], correct: 1 },
+    { id: 17, level: 'C2', question: "The CEO’s resignation was _____ with shock by the board of directors.", options: ["met", "received", "greeted", "faced"], correct: 0 },
+    { id: 18, level: 'C2', question: "Should you require any further information, please _____ not to contact us.", options: ["hesitate", "feel free", "do", "fail"], correct: 1 }
 ];
 
 const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
@@ -27,8 +46,8 @@ window.addEventListener('DOMContentLoaded', () => {
 function initSeedData() {
     if (!localStorage.getItem('research_data')) {
         const sampleData = [
-            { id: 1, date: '2026-11-01 10:15', age: '10-20', perceived: 'B2', actual: 'B1', score: 6, status: 'OVERESTIMATED' },
-            { id: 2, date: '2026-11-01 11:30', age: '20-30', perceived: 'B1', actual: 'B1', score: 6, status: 'ACCURATE' }
+            { id: 1, date: '2026-11-01 10:15', age: '10-20', perceived: 'B2', actual: 'B1', score: 10, status: 'OVERESTIMATED' },
+            { id: 2, date: '2026-11-01 11:30', age: '20-30', perceived: 'B1', actual: 'B1', score: 9, status: 'ACCURATE' }
         ];
         localStorage.setItem('research_data', JSON.stringify(sampleData));
     }
@@ -122,11 +141,12 @@ function nextQuestion() {
 }
 
 function calculateActualLevel(score) {
-    if (score <= 2) return 'A1';
-    if (score <= 4) return 'A2';
-    if (score <= 6) return 'B1';
-    if (score <= 8) return 'B2';
-    return 'C1';
+    if (score <= 3) return 'A1';
+    if (score <= 6) return 'A2';
+    if (score <= 10) return 'B1';
+    if (score <= 14) return 'B2';
+    if (score <= 17) return 'C1';
+    return 'C2';
 }
 
 function finishQuiz() {
@@ -148,13 +168,13 @@ function finishQuiz() {
     localStorage.setItem('research_data', JSON.stringify(data));
 
     document.getElementById('res-perceived').innerText = currentUser.perceivedLevel;
-    document.getElementById('res-actual').innerText = `${actualLevel} (${score}/10 xal)`;
+    document.getElementById('res-actual').innerText = `${actualLevel} (${score}/18 xal)`;
 
     const emojiEl = document.getElementById('res-reaction-emoji');
     const titleEl = document.getElementById('res-reaction-title');
     const box = document.getElementById('res-analysis-box');
 
-    if (score >= 8) {
+    if (score >= 14) {
         emojiEl.innerText = "🏆";
         titleEl.innerText = "Möhtəşəm Nəticə!";
         box.className = "p-5 rounded-xl mb-6 max-w-lg mx-auto text-sm bg-emerald-50 text-emerald-900 border border-emerald-200 text-left";
@@ -163,7 +183,7 @@ function finishQuiz() {
             <p class="mb-2">İngilis dili bilikləriniz və qrammatika bacarığınız çox yüksək səviyyədədir.</p>
             <div class="text-xs italic text-emerald-700 bg-emerald-100/60 p-2.5 rounded-lg">💡 <strong>Motivasiya:</strong> "Uğur təsadüf deyil, davamlı əziyyətin nəticəsidir. Bu templə davam et!"</div>
         `;
-    } else if (score >= 5) {
+    } else if (score >= 8) {
         emojiEl.innerText = "🎯";
         titleEl.innerText = "Yaxşı Nəticədir!";
         box.className = "p-5 rounded-xl mb-6 max-w-lg mx-auto text-sm bg-amber-50 text-amber-900 border border-amber-200 text-left";
@@ -226,7 +246,7 @@ function renderAdminTable() {
             <td class="p-4 text-xs text-slate-500">${item.date}</td>
             <td class="p-4 font-semibold text-slate-800">${item.age}</td>
             <td class="p-4"><span class="font-bold text-slate-700">${item.perceived}</span></td>
-            <td class="p-4"><span class="font-bold text-indigo-600">${item.actual}</span> (${item.score}/10)</td>
+            <td class="p-4"><span class="font-bold text-indigo-600">${item.actual}</span> (${item.score}/18)</td>
             <td class="p-4">${badge}</td>
         `;
         tbody.appendChild(tr);
