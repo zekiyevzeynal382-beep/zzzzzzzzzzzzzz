@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İngilis Dili Bilik Səviyyəsi Tədqiqatı</title>
+    <title id="page-title">İngilis Dili Bilik Səviyyəsi Tədqiqatı</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
@@ -18,51 +18,61 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-slate-900 leading-none">EnglishLevel Lab</h1>
-                    <span class="text-xs text-slate-500 font-medium">Sosial-Dilçilik Tədqiqatı Project</span>
+                    <span id="header-subtitle" class="text-xs text-slate-500 font-medium">Sosial-Dilçilik Tədqiqatı Project</span>
                 </div>
             </div>
-            <button onclick="toggleAdminPanel()" class="flex items-center space-x-2 text-sm text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-all border border-slate-200">
-                <i data-lucide="shield-alert" class="w-4 h-4"></i>
-                <span class="font-medium">Tədqiqatçı Paneli</span>
-            </button>
+            
+            <div class="flex items-center space-x-3">
+                <!-- Dil Seçimi -->
+                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 rounded-lg px-2.5 py-2 outline-none cursor-pointer">
+                    <option value="az">🇦🇿 Azərbaycanca</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+
+                <button onclick="toggleAdminPanel()" class="flex items-center space-x-2 text-sm text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-all border border-slate-200">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                    <span id="admin-btn-text" class="font-medium">Tədqiqatçı Paneli</span>
+                </button>
+            </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-8">
         <section id="step-setup" class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
             <div class="max-w-2xl mx-auto text-center mb-8">
-                <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full border border-indigo-100">Anonim Sorğu & Test</span>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 mb-2">İngilis dili biliyinizi test edin</h2>
-                <p class="text-slate-600 text-sm md:text-base">Bu tədqiqat müxtəlif yaş qruplarının ingilis dili üzrə özünə inamı ilə real bilik səviyyəsi arasındakı fərqi ölçmək üçündür.</p>
+                <span id="setup-badge" class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full border border-indigo-100">Anonim Sorğu & Test</span>
+                <h2 id="setup-heading" class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 mb-2">İngilis dili biliyinizi test edin</h2>
+                <p id="setup-desc" class="text-slate-600 text-sm md:text-base">Bu tədqiqat müxtəlif yaş qruplarının ingilis dili üzrə özünə inamı ilə real bilik səviyyəsi arasındakı fərqi ölçmək üçündür.</p>
             </div>
 
             <form id="setup-form" onsubmit="startQuiz(event)" class="max-w-xl mx-auto space-y-6">
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">1. Yaş qrupunuz</label>
+                    <label id="label-age" class="block text-sm font-semibold text-slate-700 mb-2">1. Yaş qrupunuz</label>
                     <select id="user-age" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <option value="">Yaş aralığını seçin</option>
-                        <option value="10-20">10 - 20 yaş</option>
-                        <option value="20-30">20 - 30 yaş</option>
-                        <option value="30-40">30 - 40 yaş</option>
-                        <option value="40-50">40 - 50 yaş</option>
-                        <option value="50-60">50 - 60 yaş</option>
-                        <option value="60-70">60 - 70 yaş</option>
-                        <option value="70+">70+ yaş</option>
+                        <option value="" id="opt-default-age">Yaş aralığını seçin</option>
+                        <option value="10-20">10 - 20</option>
+                        <option value="20-30">20 - 30</option>
+                        <option value="30-40">30 - 40</option>
+                        <option value="40-50">40 - 50</option>
+                        <option value="50-60">50 - 60</option>
+                        <option value="60-70">60 - 70</option>
+                        <option value="70+">70+</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">2. Sizcə İngilis dili səviyyəniz hansıdır?</label>
+                    <label id="label-perceived" class="block text-sm font-semibold text-slate-700 mb-1">2. Sizcə İngilis dili səviyyəniz hansıdır?</label>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="A1" required class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">A1</div><div class="text-xs text-slate-500">Başlanğıc</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="A2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">A2</div><div class="text-xs text-slate-500">Sadə</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="B1" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">B1</div><div class="text-xs text-slate-500">Orta</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="B2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">B2</div><div class="text-xs text-slate-500">Yüksək Orta</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="C1" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">C1</div><div class="text-xs text-slate-500">İrəli</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="C2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">C2</div><div class="text-xs text-slate-500">Ana Dili</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="A1" required class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">A1</div><div id="desc-a1" class="text-xs text-slate-500">Başlanğıc</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="A2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">A2</div><div id="desc-a2" class="text-xs text-slate-500">Sadə</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="B1" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">B1</div><div id="desc-b1" class="text-xs text-slate-500">Orta</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="B2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">B2</div><div id="desc-b2" class="text-xs text-slate-500">Yüksək Orta</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="C1" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">C1</div><div id="desc-c1" class="text-xs text-slate-500">İrəli</div></div></label>
+                        <label class="cursor-pointer"><input type="radio" name="perceived-level" value="C2" class="peer sr-only"><div class="border-2 border-slate-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50/50 rounded-xl p-3 text-center"><div class="font-bold">C2</div><div id="desc-c2" class="text-xs text-slate-500">Ana Dili</div></div></label>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-all shadow-md">10 Suallıq Testə Başla</button>
+                <button type="submit" id="start-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-all shadow-md">10 Suallıq Testə Başla</button>
             </form>
         </section>
 
@@ -88,46 +98,44 @@
         <section id="step-result" class="hidden bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 text-center">
             <div id="res-reaction-emoji" class="text-5xl mb-3">🎉</div>
             <h2 id="res-reaction-title" class="text-2xl font-bold text-slate-900 mb-1">Test Yekunlaşdı!</h2>
-            <p class="text-slate-600 text-sm mb-6">Məlumatlarınız tədqiqat bazasına uğurla yazıldı.</p>
+            <p id="res-subtitle" class="text-slate-600 text-sm mb-6">Məlumatlarınız tədqiqat bazasına uğurla yazıldı.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto mb-6">
-                <div class="bg-slate-50 p-4 rounded-xl border"><span class="text-xs text-slate-500 block">Düşündüyünüz</span><span id="res-perceived" class="text-2xl font-extrabold text-indigo-600">B1</span></div>
-                <div class="bg-slate-50 p-4 rounded-xl border"><span class="text-xs text-slate-500 block">Real Səviyyə</span><span id="res-actual" class="text-2xl font-extrabold text-emerald-600">A2</span></div>
+                <div class="bg-slate-50 p-4 rounded-xl border"><span id="res-label-perceived" class="text-xs text-slate-500 block">Düşündüyünüz</span><span id="res-perceived" class="text-2xl font-extrabold text-indigo-600">B1</span></div>
+                <div class="bg-slate-50 p-4 rounded-xl border"><span id="res-label-actual" class="text-xs text-slate-500 block">Real Səviyyə</span><span id="res-actual" class="text-2xl font-extrabold text-emerald-600">A2</span></div>
             </div>
 
-            <!-- Reaksiya və Motivasiya Qutusu -->
             <div id="res-analysis-box" class="p-4 rounded-xl mb-6 max-w-lg mx-auto text-sm"></div>
 
-            <!-- Əlaqə və Yenidən başlama düymələri -->
             <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-lg mx-auto mb-4">
                 <a href="https://wa.me/994706606002?text=Salam,%20tədqiqat%20saytınızdan%20yazıram..." target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-sm">
                     <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    <span>Mənimlə Əlaqə Saxla</span>
+                    <span id="contact-btn-text">Mənimlə Əlaqə Saxla</span>
                 </a>
-                <button onclick="goHome()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl transition-all">Yenidən Başla</button>
+                <button onclick="goHome()" id="restart-btn" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl transition-all">Yenidən Başla</button>
             </div>
         </section>
 
         <section id="step-admin" class="hidden space-y-6">
             <div class="flex justify-between items-center bg-white p-6 rounded-2xl border">
-                <h2 class="text-xl font-bold text-slate-900">Tədqiqatçı Paneli</h2>
+                <h2 id="admin-panel-title" class="text-xl font-bold text-slate-900">Tədqiqatçı Paneli</h2>
                 <div class="space-x-2">
-                    <button onclick="exportToCSV()" class="bg-emerald-600 text-white text-sm px-4 py-2 rounded-xl">CSV Yüklə</button>
-                    <button onclick="clearData()" class="bg-rose-50 text-rose-600 text-sm px-3 py-2 rounded-xl">Sıfırla</button>
+                    <button onclick="exportToCSV()" id="csv-btn" class="bg-emerald-600 text-white text-sm px-4 py-2 rounded-xl">CSV Yüklə</button>
+                    <button onclick="clearData()" id="clear-btn" class="bg-rose-50 text-rose-600 text-sm px-3 py-2 rounded-xl">Sıfırla</button>
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl border"><span class="text-xs text-slate-500">Ümumi</span><div id="stat-total" class="text-3xl font-extrabold mt-2">0</div></div>
-                <div class="bg-white p-5 rounded-2xl border"><span class="text-xs text-slate-500">Dəqiq Təxmin</span><div id="stat-match" class="text-3xl font-extrabold text-emerald-600 mt-2">0%</div></div>
-                <div class="bg-white p-5 rounded-2xl border"><span class="text-xs text-slate-500">Yüksək Zənn</span><div id="stat-over" class="text-3xl font-extrabold text-amber-600 mt-2">0%</div></div>
-                <div class="bg-white p-5 rounded-2xl border"><span class="text-xs text-slate-500">Aşağı Zənn</span><div id="stat-under" class="text-3xl font-extrabold text-indigo-600 mt-2">0%</div></div>
+                <div class="bg-white p-5 rounded-2xl border"><span id="stat-lbl-total" class="text-xs text-slate-500">Ümumi</span><div id="stat-total" class="text-3xl font-extrabold mt-2">0</div></div>
+                <div class="bg-white p-5 rounded-2xl border"><span id="stat-lbl-match" class="text-xs text-slate-500">Dəqiq Təxmin</span><div id="stat-match" class="text-3xl font-extrabold text-emerald-600 mt-2">0%</div></div>
+                <div class="bg-white p-5 rounded-2xl border"><span id="stat-lbl-over" class="text-xs text-slate-500">Yüksək Zənn</span><div id="stat-over" class="text-3xl font-extrabold text-amber-600 mt-2">0%</div></div>
+                <div class="bg-white p-5 rounded-2xl border"><span id="stat-lbl-under" class="text-xs text-slate-500">Aşağı Zənn</span><div id="stat-under" class="text-3xl font-extrabold text-indigo-600 mt-2">0%</div></div>
             </div>
             <div class="bg-white rounded-2xl border overflow-hidden">
-                <div class="px-6 py-4 border-b flex justify-between">
-                    <h3 class="font-bold">Cədvəl</h3>
-                    <div class="space-x-2">
+                <div class="px-6 py-4 border-b flex justify-between items-center">
+                    <h3 id="admin-table-title" class="font-bold">Cədvəl</h3>
+                    <div class="space-x-2 flex">
                         <select id="filter-age" onchange="renderAdminTable()" class="border text-xs p-2 rounded">
-                            <option value="ALL">Bütün Yaşlar</option>
+                            <option value="ALL" id="opt-all-ages">Bütün Yaşlar</option>
                             <option value="10-20">10-20</option>
                             <option value="20-30">20-30</option>
                             <option value="30-40">30-40</option>
@@ -137,15 +145,15 @@
                             <option value="70+">70+</option>
                         </select>
                         <select id="filter-status" onchange="renderAdminTable()" class="border text-xs p-2 rounded">
-                            <option value="ALL">Bütün Statuslar</option>
-                            <option value="OVERESTIMATED">Yüksək</option>
-                            <option value="ACCURATE">Dəqiq</option>
-                            <option value="UNDERESTIMATED">Aşağı</option>
+                            <option value="ALL" id="opt-all-statuses">Bütün Statuslar</option>
+                            <option value="OVERESTIMATED" id="opt-status-over">Yüksək</option>
+                            <option value="ACCURATE" id="opt-status-acc">Dəqiq</option>
+                            <option value="UNDERESTIMATED" id="opt-status-und">Aşağı</option>
                         </select>
                     </div>
                 </div>
                 <table class="w-full text-left text-sm">
-                    <thead><tr class="bg-slate-50 text-slate-500 border-b text-xs"><th class="p-4">#</th><th class="p-4">Tarix</th><th class="p-4">Yaş</th><th class="p-4">Təxmin</th><th class="p-4">Real</th><th class="p-4">Status</th></tr></thead>
+                    <thead><tr class="bg-slate-50 text-slate-500 border-b text-xs"><th class="p-4">#</th><th id="th-date" class="p-4">Tarix</th><th id="th-age" class="p-4">Yaş</th><th id="th-perceived" class="p-4">Təxmin</th><th id="th-actual" class="p-4">Real</th><th id="th-status" class="p-4">Status</th></tr></thead>
                     <tbody id="admin-table-body" class="divide-y"></tbody>
                 </table>
             </div>
