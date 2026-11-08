@@ -25,8 +25,8 @@ window.addEventListener('DOMContentLoaded', () => {
 function initSeedData() {
     if (!localStorage.getItem('research_data')) {
         const sampleData = [
-            { id: 1, date: '2026-11-01 10:15', age: '16-20', perceived: 'B2', actual: 'B1', score: 6, status: 'OVERESTIMATED' },
-            { id: 2, date: '2026-11-01 11:30', age: '21-30', perceived: 'B1', actual: 'B1', score: 6, status: 'ACCURATE' }
+            { id: 1, date: '2026-11-01 10:15', age: '10-20', perceived: 'B2', actual: 'B1', score: 6, status: 'OVERESTIMATED' },
+            { id: 2, date: '2026-11-01 11:30', age: '20-30', perceived: 'B1', actual: 'B1', score: 6, status: 'ACCURATE' }
         ];
         localStorage.setItem('research_data', JSON.stringify(sampleData));
     }
