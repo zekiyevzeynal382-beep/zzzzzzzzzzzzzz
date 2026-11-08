@@ -1,3 +1,42 @@
+const questionsData = {
+    az: [
+        { id: 1, level: 'A1', question: "O, hər gün məktəbə _____.", options: ["go", "goes", "going", "gone"], correct: 1 },
+        { id: 2, level: 'A1', question: "Soyuducuda süd qalıbmı? (_____ there any milk...)", options: ["Is", "Are", "Do", "Have"], correct: 0 },
+        { id: 3, level: 'A2', question: "Dünən biz həqiqətən maraqlı kino _____.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
+        { id: 4, level: 'A2', question: "Əgər sabah yağış yağsa, biz evdə _____.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
+        { id: 5, level: 'B1', question: "Mən 2018-ci ildən bəri əmioğlumu görməmişəm. (_____ 2018)", options: ["for", "since", "during", "from"], correct: 1 },
+        { id: 6, level: 'B1', question: "O məndən əvvəlki gecə haraya getdiyimi soruşdu.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
+        { id: 7, level: 'B2', question: "Çox _____ baxmayaraq, o, hədəfə çata bilmədi.", options: ["to work", "he worked", "working", "work"], correct: 2 },
+        { id: 8, level: 'B2', question: "İşıqlar sönən kimi o otağa daxil oldu. (Hardly _____ entered...)", options: ["I had", "had I", "did I", "I have"], correct: 1 },
+        { id: 9, level: 'C1', question: "Təklif həddindən artıq bahalı olması _____ rədd edildi.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
+        { id: 10, level: 'C1', question: "O, fayllarını səliqəli saxlamaqda diqqətcildir. (meticulous _____ keeping)", options: ["with", "about", "in", "at"], correct: 1 }
+    ],
+    ru: [
+        { id: 1, level: 'A1', question: "Она _____ в школу каждый день.", options: ["go", "goes", "going", "gone"], correct: 1 },
+        { id: 2, level: 'A1', question: "Осталось ли в холодильнике молоко? (_____ there any milk...)", options: ["Is", "Are", "Do", "Have"], correct: 0 },
+        { id: 3, level: 'A2', question: "Вчера мы _____ очень интересный фильм.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
+        { id: 4, level: 'A2', question: "Если завтра пойдет дождь, мы _____ дома.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
+        { id: 5, level: 'B1', question: "Я не видел своего двоюродного брата _____ 2018 года.", options: ["for", "since", "during", "from"], correct: 1 },
+        { id: 6, level: 'B1', question: "Он спросил меня, куда я _____ предыдущей ночью.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
+        { id: 7, level: 'B2', question: "Несмотря на то, что он _____ упорно, он не достиг цели.", options: ["to work", "he worked", "working", "work"], correct: 2 },
+        { id: 8, level: 'B2', question: "Едва _____, как погас свет. (Hardly _____ entered...)", options: ["I had", "had I", "did I", "I have"], correct: 1 },
+        { id: 9, level: 'C1', question: "Предложение было отклонено на том _____, что оно было слишком дорогим.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
+        { id: 10, level: 'C1', question: "Она очень скрупулезно _____ файлы в порядке. (meticulous _____ keeping)", options: ["with", "about", "in", "at"], correct: 1 }
+    ],
+    en: [
+        { id: 1, level: 'A1', question: "She _____ to school every day.", options: ["go", "goes", "going", "gone"], correct: 1 },
+        { id: 2, level: 'A1', question: "_____ there any milk left in the fridge?", options: ["Is", "Are", "Do", "Have"], correct: 0 },
+        { id: 3, level: 'A2', question: "Yesterday, we _____ a really interesting movie.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
+        { id: 4, level: 'A2', question: "If it rains tomorrow, we _____ home.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
+        { id: 5, level: 'B1', question: "I haven't seen my cousin _____ 2018.", options: ["for", "since", "during", "from"], correct: 1 },
+        { id: 6, level: 'B1', question: "He asked me where I _____ the previous night.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
+        { id: 7, level: 'B2', question: "Despite _____ hard, he failed to achieve the target.", options: ["to work", "he worked", "working", "work"], correct: 2 },
+        { id: 8, level: 'B2', question: "Hardly _____ entered the room when the lights went out.", options: ["I had", "had I", "did I", "I have"], correct: 1 },
+        { id: 9, level: 'C1', question: "The proposal was rejected on the _____ that it was too expensive.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
+        { id: 10, level: 'C1', question: "She is meticulous _____ keeping her files organized.", options: ["with", "about", "in", "at"], correct: 1 }
+    ]
+};
+
 const translations = {
     az: {
         pageTitle: "İngilis Dili Bilik Səviyyəsi Tədqiqatı",
@@ -86,6 +125,28 @@ const translations = {
 };
 
 let currentLang = 'az';
+const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
+let currentUser = { age: '', perceivedLevel: '' };
+let currentQuestionIdx = 0;
+let selectedOptionIdx = null;
+let userAnswers = [];
+
+const ADMIN_PASSWORD = "k1z2k3z4k5"; 
+
+window.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+    initSeedData();
+});
+
+function initSeedData() {
+    if (!localStorage.getItem('research_data')) {
+        const sampleData = [
+            { id: 1, date: '2026-11-01 10:15', age: '10-20', perceived: 'B2', actual: 'B1', score: 6, status: 'OVERESTIMATED' },
+            { id: 2, date: '2026-11-01 11:30', age: '20-30', perceived: 'B1', actual: 'B1', score: 6, status: 'ACCURATE' }
+        ];
+        localStorage.setItem('research_data', JSON.stringify(sampleData));
+    }
+}
 
 function changeLanguage(lang) {
     currentLang = lang;
@@ -138,42 +199,6 @@ function changeLanguage(lang) {
     document.getElementById('th-status').innerText = t.thStatus;
 }
 
-const questions = [
-    { id: 1, level: 'A1', question: "She _____ to school every day.", options: ["go", "goes", "going", "gone"], correct: 1 },
-    { id: 2, level: 'A1', question: "_____ there any milk left in the fridge?", options: ["Is", "Are", "Do", "Have"], correct: 0 },
-    { id: 3, level: 'A2', question: "Yesterday, we _____ a really interesting movie.", options: ["watch", "have watched", "watched", "were watching"], correct: 2 },
-    { id: 4, level: 'A2', question: "If it rains tomorrow, we _____ home.", options: ["stayed", "will stay", "stay", "would stay"], correct: 1 },
-    { id: 5, level: 'B1', question: "I haven't seen my cousin _____ 2018.", options: ["for", "since", "during", "from"], correct: 1 },
-    { id: 6, level: 'B1', question: "He asked me where I _____ the previous night.", options: ["had gone", "went", "have gone", "was go"], correct: 0 },
-    { id: 7, level: 'B2', question: "Despite _____ hard, he failed to achieve the target.", options: ["to work", "he worked", "working", "work"], correct: 2 },
-    { id: 8, level: 'B2', question: "Hardly _____ entered the room when the lights went out.", options: ["I had", "had I", "did I", "I have"], correct: 1 },
-    { id: 9, level: 'C1', question: "The proposal was rejected on the _____ that it was too expensive.", options: ["grounds", "reasons", "causes", "motives"], correct: 0 },
-    { id: 10, level: 'C1', question: "She is meticulous _____ keeping her files organized.", options: ["with", "about", "in", "at"], correct: 1 }
-];
-
-const levelOrder = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-let currentUser = { age: '', perceivedLevel: '' };
-let currentQuestionIdx = 0;
-let selectedOptionIdx = null;
-let userAnswers = [];
-
-const ADMIN_PASSWORD = "k1z2k3z4k5"; 
-
-window.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-    initSeedData();
-});
-
-function initSeedData() {
-    if (!localStorage.getItem('research_data')) {
-        const sampleData = [
-            { id: 1, date: '2026-11-01 10:15', age: '10-20', perceived: 'B2', actual: 'B1', score: 6, status: 'OVERESTIMATED' },
-            { id: 2, date: '2026-11-01 11:30', age: '20-30', perceived: 'B1', actual: 'B1', score: 6, status: 'ACCURATE' }
-        ];
-        localStorage.setItem('research_data', JSON.stringify(sampleData));
-    }
-}
-
 function showStep(stepId) {
     ['step-setup', 'step-quiz', 'step-result', 'step-admin'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
@@ -219,6 +244,7 @@ function startQuiz(e) {
 }
 
 function loadQuestion() {
+    const questions = questionsData[currentLang];
     const q = questions[currentQuestionIdx];
     selectedOptionIdx = null;
     
@@ -255,6 +281,7 @@ function selectOption(idx, btnElement) {
 }
 
 function nextQuestion() {
+    const questions = questionsData[currentLang];
     if (selectedOptionIdx === null) return;
     userAnswers.push({ questionId: questions[currentQuestionIdx].id, selected: selectedOptionIdx, isCorrect: selectedOptionIdx === questions[currentQuestionIdx].correct });
     currentQuestionIdx++;
